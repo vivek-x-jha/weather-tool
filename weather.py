@@ -1,0 +1,47 @@
+import os
+from typing import Any, Literal
+import requests
+
+def get_user_input() -> tuple[Literal['zip', 'city', ''], str]:
+    """Takes user input and structures response for GET methods"""
+    while True:
+        input_choice: str = input('Would you like to get weather information? [y/n]: ')
+        if input_choice.lower() == 'y':
+            query_field: str = input('Great! Want to fetch by city name or zip code? [city/zip]: ')
+        else:
+            return '', ''
+
+        # Continues to loop asking for user input unless user inputs "city" or "zip"
+        while True:
+            if query_field == 'zip':
+                return query_field, input('Please enter a zip code: ')
+            elif query_field == 'city':
+                return query_field, input('Please enter a city name: ')
+            else:
+                print('Oops, please choose "city" or "zip"!')
+                break
+
+def _get_json(query_field: Literal['zip', 'city'], query_value: str) -> dict[str, Any]:
+    """Takes structured user input and fetches response"""
+    endpoint: str = 'http://api.openweathermap.org/data/2.5/weather'
+    query_string: str = f'zip={query_value},us' if query_field == 'zip' else f'q={query_value}'
+
+    assert (API_KEY := os.getenv('API_KEY')), "Missing environment variable: API_KEY"
+
+    url: str = f'{endpoint}?{query_string}&appid={API_KEY}'
+
+    return requests.get(url).json()
+
+def get_temperature(query_field: Literal['zip', 'city'], query_value: str) -> int:
+    """Takes structured user input and fetches temperature in Fahrenheit"""
+    response: dict[str, Any] = _get_json(query_field, query_value)
+    temp_k: float = response['main']['temp']
+    temp_f: float = (temp_k - 273.15) * 1.8 + 32
+
+    return int(temp_f)
+
+def get_wind_status(query_field: Literal['zip', 'city'], query_value: str) -> str:
+    """Takes structured user input and fetches wind status"""
+    response: dict[str, Any] = _get_json(query_field, query_value)
+
+    return response['weather'][0]['description']
