@@ -3,13 +3,13 @@ from weather import get_temperature, get_user_input, get_wind_status
 
 def main() -> None:
     while True:
-        query_field: Literal['zip', 'city', '']
+        query_field: Literal['zip', 'city']
         query_value: str
         query_field, query_value = get_user_input()
 
-        if not query_field:
+        if not query_value:
             print('Ok! Shutting Down...')
-            break
+            return
 
         try:
             temperature: int = get_temperature(query_field, query_value)
