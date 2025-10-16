@@ -1,5 +1,7 @@
 from typing import Literal
+
 from weather import get_temperature, get_user_input, get_wind_status
+
 
 def main() -> None:
     while True:
@@ -19,6 +21,7 @@ def main() -> None:
             print(f'The wind status in {query_value} is(are) {wind_status}.')
         except KeyError:
             print(f'Uh oh, seems openweather cannot recognize the {query_field} "{query_value}"!')
+
 
 if __name__ == '__main__':
     main()
