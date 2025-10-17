@@ -7,9 +7,3 @@ requires-python = ">=3.13"
 dependencies = [
     "requests>=2.32.5",
 ]
-
-[tool.ruff]
-line-length = 150
-
-[tool.ruff.format]
-quote-style = "single"
