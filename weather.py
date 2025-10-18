@@ -3,8 +3,10 @@ from typing import Any, Literal
 
 import requests
 
+QueryField = Literal['zip', 'city']
 
-def get_user_input() -> tuple[Literal['zip', 'city'], str]:
+
+def get_user_input() -> tuple[QueryField, str]:
     """Takes user input and structures response for GET methods"""
     while True:
         input_choice: str = input('Would you like to get weather information? [y/n]: ')
@@ -21,7 +23,7 @@ def get_user_input() -> tuple[Literal['zip', 'city'], str]:
             print('Oops, please choose "city" or "zip"!')
 
 
-def _get_json(query_field: Literal['zip', 'city'], query_value: str) -> dict[str, Any]:
+def _get_json(query_field: QueryField, query_value: str) -> dict[str, Any]:
     """Takes structured user input and fetches response"""
     endpoint: str = 'http://api.openweathermap.org/data/2.5/weather'
     query_string: str = f'zip={query_value},us' if query_field == 'zip' else f'q={query_value}'
@@ -33,7 +35,7 @@ def _get_json(query_field: Literal['zip', 'city'], query_value: str) -> dict[str
     return requests.get(url).json()
 
 
-def get_temperature(query_field: Literal['zip', 'city'], query_value: str) -> int:
+def get_temperature(query_field: QueryField, query_value: str) -> int:
     """Takes structured user input and fetches temperature in Fahrenheit"""
     response: dict[str, Any] = _get_json(query_field, query_value)
     temp_k: float = response['main']['temp']
@@ -42,7 +44,7 @@ def get_temperature(query_field: Literal['zip', 'city'], query_value: str) -> in
     return int(temp_f)
 
 
-def get_wind_status(query_field: Literal['zip', 'city'], query_value: str) -> str:
+def get_wind_status(query_field: QueryField, query_value: str) -> str:
     """Takes structured user input and fetches wind status"""
     response: dict[str, Any] = _get_json(query_field, query_value)
 
