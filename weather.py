@@ -24,15 +24,14 @@ def get_user_input() -> tuple[QueryField, str]:
 
 
 def _get_json(query_field: QueryField, query_value: str) -> dict[str, Any]:
-    """Takes structured user input and fetches response"""
     endpoint: str = 'http://api.openweathermap.org/data/2.5/weather'
-    query_string: str = f'zip={query_value},us' if query_field == 'zip' else f'q={query_value}'
+
+    params: dict[str, str] = {'zip': f'{query_value},us'} if query_field == 'zip' else {'q': query_value}
 
     assert (API_KEY := os.getenv('API_KEY')), 'Missing environment variable: API_KEY'
+    params['appid'] = API_KEY
 
-    url: str = f'{endpoint}?{query_string}&appid={API_KEY}'
-
-    return requests.get(url).json()
+    return requests.get(endpoint, params=params).json()
 
 
 def get_temperature(query_field: QueryField, query_value: str) -> int:
