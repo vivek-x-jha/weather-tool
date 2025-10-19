@@ -1,26 +1,22 @@
-from typing import Literal
-
-from weather import get_temperature, get_user_input, get_wind_status
+from weather import WeatherLookupError, get_user_input, get_weather_report
 
 
 def main() -> None:
     while True:
-        query_field: Literal['zip', 'city']
-        query_value: str
-        query_field, query_value = get_user_input()
+        query: str = get_user_input()
 
-        if not query_value:
+        if not query:
             print('Ok! Shutting Down...')
             return
 
         try:
-            temperature: int = get_temperature(query_field, query_value)
-            wind_status: str = get_wind_status(query_field, query_value)
+            report = get_weather_report(query)
+            location_label: str = report.location_label
 
-            print(f'The temperature in {query_value} is {temperature} degrees Fahrenheit.')
-            print(f'The wind status in {query_value} is(are) {wind_status}.')
-        except KeyError:
-            print(f'Uh oh, seems openweather cannot recognize the {query_field} "{query_value}"!')
+            print(f'The temperature in {location_label} is {report.temp} degrees Fahrenheit.')
+            print(f'The wind status in {location_label} is(are) {report.status}.')
+        except WeatherLookupError as error:
+            print(f'Uh oh, {error}')
 
 
 if __name__ == '__main__':
