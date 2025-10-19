@@ -1,7 +1,12 @@
-# Project
-.env
+# =========================
+# Project-Specific
+# =========================
+.env*
 
-# Python-generated files
+# =========================
+# Python / Build Artifacts
+# =========================
+__pycache__/
 *.py[oc]
 build/
 dist/
@@ -11,15 +16,40 @@ wheels/
 # Virtual environments
 .venv
 
-# Databases
+# SQLite databases
 *.sqlite3
-*.sock
 
-# Workspace Configs
+# =========================
+# System Files
+# =========================
 .DS_Store
+Thumbs.db
+/Icon[^M]
+
+# =========================
+# Editor / IDE Settings
+# =========================
+Session.vim
+Sessionx.vim
+.vscode/
+.idea/
 *.code-workspace
 
-# Swap
+# =========================
+# Archives
+# =========================
+*.zip
+*.tar
+*.tar.gz
+
+# =========================
+# Runtime Sockets
+# =========================
+*.sock
+
+# =========================
+# Swap Files
+# =========================
 [._]*.s[a-v][a-z]
 !*.svg
 [._]*.sw[a-p]
@@ -27,23 +57,16 @@ wheels/
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
-# Session
-Session.vim
-Sessionx.vim
-
-# Temporary
+# =========================
+# Temporary Files
+# =========================
 .netrwhist
 *.bak
 *~
 
-# Logs
+# =========================
+# Logs & Tags
+# =========================
 *.log
-
-# Auto-generated tag files
 tags
-
-# Persistent undo
-[._]*.un~
-
-# Folder icon
-/Icon[^M]
+[._]*.un~~
