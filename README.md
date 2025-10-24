@@ -28,13 +28,13 @@ Run the Tool
 - Using `uv` (recommended):
 
   ```
-  uv run --env-file .env main.py
+  uv run main.py
   ```
 
 - Using standard Python:
 
   ```
-  python main.py
+  python -m main
   ```
 
 Follow the prompts to fetch weather data by city or ZIP code. Enter `n` when prompted to exit.

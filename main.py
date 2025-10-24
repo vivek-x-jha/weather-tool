@@ -1,3 +1,7 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from weather import WeatherLookupError, get_user_input, get_weather_report
 
 
